@@ -1,0 +1,11 @@
+{
+  "name": "pharmacy-design-doc",
+  "private": true,
+  "description": "Generates docs/DesignDocument-QCommerce-Apteki.docx",
+  "scripts": {
+    "build": "node build-design-doc.js"
+  },
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}

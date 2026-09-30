@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#44546A"/>
+    </marker>
+    <style>
+      .g{fill:#FFFFFF;stroke:#1B7F5E;stroke-width:1.6}
+      .gg{fill:#E8F5EF;stroke:#1B7F5E;stroke-width:1.8}
+      .i{fill:#F2F2F2;stroke:#6B6B6B;stroke-width:1.2}
+      .x{fill:#F6F6F6;stroke:#8A8A8A;stroke-width:1.2;stroke-dasharray:5 3}
+      .c{fill:#FFF7E6;stroke:#B7791F;stroke-width:1.2}
+      .m{fill:#EEF3F8;stroke:#1F4E79;stroke-width:1.2}
+      .t{font-size:13px;fill:#1A1A1A;text-anchor:middle}
+      .tb{font-size:13px;font-weight:600;fill:#1A1A1A;text-anchor:middle}
+      .s{font-size:11px;fill:#55606E;text-anchor:middle}
+      .l{font-size:11px;fill:#44546A;text-anchor:middle}
+      .ln{stroke:#44546A;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .lb{stroke:#44546A;stroke-width:1.4;fill:none;marker-end:url(#a);marker-start:url(#a)}
+      .legend{fill:#FAFAFA;stroke:#C8CDD3;stroke-width:1}
+      .lt{font-size:11.5px;fill:#333}
+      .lk{font-size:11.5px;fill:#1B6B50;font-weight:600}
+    </style>
+  </defs>
+  <rect width="1200" height="580" fill="#FFFFFF"/>
+
+  <rect x="20" y="75" width="150" height="70" rx="8" class="c"/>
+  <text x="95" y="104" class="tb">Aplikacja kuriera</text><text x="95" y="122" class="s">bufor offline, co 4–15 s</text>
+
+  <rect x="210" y="75" width="170" height="70" rx="8" class="g"/>
+  <text x="295" y="100" class="tb">Ingest API</text><text x="295" y="118" class="s">auth kuriera, walidacja,</text><text x="295" y="132" class="s">batch ≤ 200 odczytów</text>
+
+  <rect x="420" y="75" width="170" height="70" rx="8" class="i"/>
+  <text x="505" y="100" class="tb">Strumień pozycji</text><text x="505" y="118" class="s">Kafka / Event Hubs</text><text x="505" y="132" class="s">klucz partycji = deliveryId</text>
+
+  <rect x="630" y="30" width="240" height="160" rx="10" class="gg"/>
+  <text x="750" y="56" class="tb">Procesor pozycji</text>
+  <text x="750" y="76" class="s">agregat TrackedDelivery, 1 writer / dostawa</text>
+  <text x="750" y="100" class="t">idempotencja (eventId)</text>
+  <text x="750" y="118" class="t">kolejność (sequence, czas)</text>
+  <text x="750" y="136" class="t">dopasowanie do trasy</text>
+  <text x="750" y="154" class="t">postęp tylko do przodu</text>
+  <text x="750" y="172" class="t">ETA z tempa, detekcja objazdu</text>
+
+  <rect x="930" y="75" width="170" height="70" rx="8" class="i"/>
+  <text x="1015" y="104" class="tb">Stan dostaw</text><text x="1015" y="122" class="s">Redis (aktywne dostawy)</text>
+
+  <line x1="170" y1="110" x2="208" y2="110" class="ln"/>
+  <line x1="380" y1="110" x2="418" y2="110" class="ln"/>
+  <line x1="590" y1="110" x2="628" y2="110" class="ln"/>
+  <line x1="870" y1="110" x2="928" y2="110" class="lb"/>
+
+  <rect x="630" y="240" width="240" height="60" rx="8" class="g"/>
+  <text x="750" y="265" class="tb">Outbox relay</text><text x="750" y="283" class="s">zdarzenia w kolejności zatwierdzenia</text>
+  <line x1="750" y1="190" x2="750" y2="238" class="ln"/>
+
+  <rect x="930" y="240" width="170" height="60" rx="8" class="g"/>
+  <text x="1015" y="265" class="tb">Read model</text><text x="1015" y="283" class="s">pełny stan per zamówienie</text>
+  <line x1="870" y1="270" x2="928" y2="270" class="ln"/>
+
+  <rect x="930" y="350" width="170" height="60" rx="8" class="g"/>
+  <text x="1015" y="375" class="tb">Endpoint SSE</text><text x="1015" y="393" class="s">Redis pub/sub między węzłami</text>
+  <line x1="1015" y1="300" x2="1015" y2="348" class="ln"/>
+
+  <rect x="930" y="460" width="170" height="60" rx="8" class="c"/>
+  <text x="1015" y="485" class="tb">Aplikacja klienta</text><text x="1015" y="503" class="s">mapa, postęp, ETA</text>
+  <line x1="1015" y1="410" x2="1015" y2="458" class="ln"/>
+
+  <rect x="630" y="350" width="240" height="60" rx="8" class="i"/>
+  <text x="750" y="375" class="tb">Broker zdarzeń</text><text x="750" y="393" class="s">CourierArrived, EtaChanged, RouteChanged</text>
+  <line x1="750" y1="300" x2="750" y2="348" class="ln"/>
+
+  <rect x="630" y="460" width="240" height="60" rx="8" class="m"/>
+  <text x="750" y="485" class="tb">Zamówienia, Powiadomienia</text><text x="750" y="503" class="s">zamknięcie zamówienia, „kurier za 2 min”</text>
+  <line x1="750" y1="410" x2="750" y2="458" class="ln"/>
+
+  <rect x="420" y="240" width="170" height="60" rx="8" class="g"/>
+  <text x="505" y="265" class="tb">Adapter routingu</text><text x="505" y="283" class="s">RerouteRequested (async)</text>
+  <line x1="630" y1="262" x2="592" y2="262" class="ln"/>
+  <path d="M 540 240 L 540 205 L 690 205 L 690 192" class="ln"/>
+  <text x="612" y="200" class="l">nowa trasa + requestId</text>
+
+  <rect x="420" y="350" width="170" height="60" rx="8" class="x"/>
+  <text x="505" y="375" class="tb">Dostawca map</text><text x="505" y="393" class="s">trasa ulicami</text>
+  <line x1="505" y1="300" x2="505" y2="348" class="lb"/>
+
+  <rect x="20" y="220" width="370" height="330" rx="8" class="legend"/>
+  <text x="34" y="244" class="lk">Odpowiedniki w repozytorium (in-process)</text>
+  <text x="34" y="270" class="lt">Ingest API → POST /courier/deliveries/{id}/locations</text>
+  <text x="34" y="294" class="lt">Partycja = 1 writer → KeyedLock&lt;Guid&gt;</text>
+  <text x="34" y="318" class="lt">Procesor → TrackingService + TrackedDelivery</text>
+  <text x="34" y="342" class="lt">Stan dostaw → InMemoryDeliveryRepository</text>
+  <text x="34" y="366" class="lt">Outbox relay → TrackingEventDispatcher</text>
+  <text x="34" y="390" class="lt">Read model → TrackingReadModel</text>
+  <text x="34" y="408" class="lt">   (Channel per subskrybent, drop-oldest)</text>
+  <text x="34" y="432" class="lt">SSE → GET /orders/{id}/tracking/stream</text>
+  <text x="34" y="456" class="lt">Adapter routingu → RerouteWorker</text>
+  <text x="34" y="474" class="lt">   + IRouteProvider (StraightLineRouteProvider)</text>
+  <text x="34" y="498" class="lt">Broker → log zdarzeń integracyjnych</text>
+  <text x="34" y="526" class="lt">Kontrakty i reguły są takie same jak docelowo;</text>
+  <text x="34" y="542" class="lt">podmieniane są tylko adaptery infrastruktury.</text>
+</svg>
